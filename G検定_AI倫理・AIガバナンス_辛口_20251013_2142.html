@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="G検定の練習問題（個人作成・非公式）。AIによる自動生成問題で学習をサポートします。">
+    <meta name="keywords" content="G検定,JDLA,ディープラーニング,練習問題,AI,機械学習">
+    <meta name="author" content="個人作成（非公式）">
+    
+    <!-- OGP Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="G検定 練習問題（個人作成・非公式）">
+    <meta property="og:description" content="G検定の練習問題。AIによる自動生成で学習をサポート。">
+    <meta property="og:site_name" content="G検定 練習問題">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="G検定 練習問題（個人作成・非公式）">
+    <meta name="twitter:description" content="G検定の練習問題。AIによる自動生成で学習をサポート。">
+    
+    <title>G検定 練習問題（個人作成・非公式）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Yu Gothic', 'Hiragino Sans', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 10px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #4a90e2;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .meta {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+        
+        .credit-badge {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+        
+        .difficulty-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .difficulty-mild { background-color: #d4edda; color: #155724; }
+        .difficulty-medium { background-color: #fff3cd; color: #856404; }
+        .difficulty-hot { background-color: #f8d7da; color: #721c24; }
+        
+        /* 難易度別背景色（削除 - 問題ブロック個別に適用） */
+        
+        .notice {
+            background: #e7f3ff;
+            border-left: 4px solid #4a90e2;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid #3498db;
+        }
+        
+        /* 難易度別問題ブロック背景色 */
+        .question-block.difficulty-mild { 
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            border-left: 4px solid #ffc107;
+        }
+        .question-block.difficulty-medium { 
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%); 
+            border-left: 4px solid #fd7e14;
+        }
+        .question-block.difficulty-hot { 
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); 
+            border-left: 4px solid #dc3545;
+        }
+        
+        .question-number {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4a90e2;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            background: white;
+        }
+        
+        .choices {
+            margin: 20px 0;
+        }
+        
+        .choice {
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #bdc3c7;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            padding-left: 40px;
+        }
+        
+        .choice::before {
+            content: attr(data-answer) ".";
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: bold;
+            color: #4a90e2;
+            font-size: 1rem;
+            z-index: 1;
+        }
+        
+        .choice-label {
+            font-weight: bold;
+            color: #4a90e2;
+            margin-right: 10px;
+        }
+        
+        /* detailsタグスタイル（JavaScript不要） */
+        details {
+            margin: 20px 0;
+        }
+        
+        summary {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: block;
+            text-align: center;
+            list-style: none;
+            user-select: none;
+        }
+        
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        summary:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+        
+        summary:focus {
+            outline: 3px solid #357abd;
+            outline-offset: 4px;
+        }
+        
+        summary:focus:not(:focus-visible) {
+            outline: none;
+        }
+        
+        .answer-section {
+            margin-top: 25px;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+            border-left: 5px solid #27ae60;
+            animation: slideDown 0.4s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .correct-answer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+        
+        .explanation {
+            line-height: 1.8;
+            color: #34495e;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+        .explanation-divider {
+            border: 0;
+            height: 1px;
+            background: #e0e0e0;
+            margin: 16px 0;
+        }
+        
+        .explanation-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 10px;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+        
+        
+        .explanation ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 10px 0;
+        }
+        
+        .explanation li {
+            margin-bottom: 8px;
+            padding-left: 0;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        /* スマホ最適化 */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                padding: 10px;
+                margin: 5px;
+                border-radius: 8px;
+            }
+            
+            .header h1 {
+                font-size: 1.3rem;
+            }
+            
+            .question-block {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .question-text {
+                font-size: 0.9rem;
+                line-height: 1.5;
+            }
+            
+            .choice {
+                padding: 5px 8px;
+                margin-bottom: 3px;
+                font-size: 0.85rem;
+                padding-left: 35px;
+            }
+            
+            .choice::before {
+                left: 8px;
+                font-size: 0.9rem;
+            }
+            
+            .explanation {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+            
+            summary {
+                padding: 6px 10px;
+                font-size: 0.85rem;
+            }
+            
+            /* スマホでは印刷ボタンを非表示 */
+            .print-button {
+                display: none;
+            }
+        }
+        
+        /* 印刷用スタイル */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 20px;
+            }
+            
+            .question-block {
+                page-break-inside: avoid;
+                margin-bottom: 30px;
+                border: 1px solid #ccc;
+                background: white !important;
+            }
+            
+            .question-text,
+            .choice {
+                background: white !important;
+            }
+            
+            /* 解答ボタンを非表示 */
+            summary {
+                display: none;
+            }
+            
+            /* 解答を常に表示 */
+            details {
+                display: block;
+            }
+            
+            details[open] .answer-section,
+            details .answer-section {
+                display: block;
+                page-break-before: avoid;
+                background: white !important;
+                animation: none;
+            }
+            
+            .explanation {
+                background: white !important;
+            }
+            
+            /* 印刷ボタンを非表示 */
+            .print-button {
+                display: none;
+            }
+        }
+        
+        /* 印刷ボタン */
+        .print-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .print-button:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5);
+        }
+        
+        .print-button:focus {
+            outline: 3px solid #357abd;
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <header class="header">
+                <h1>G検定 練習問題</h1>
+                <div class="meta">
+                    <div class="difficulty-badge difficulty-medium">難易度: 辛口</div>
+                    <div>AI倫理・AIガバナンス | 全2問</div>
+                    <div class="credit-badge">by fuhito.f (非公式)</div>
+                </div>
+            </header>
+            
+            <div class="notice" role="alert">
+                <strong>⚠️ 重要な注意事項</strong><br>
+                本問題は個人が作成した非公式の練習問題です。<strong>日本ディープラーニング協会（JDLA）とは一切関係ありません。</strong><br>
+                実際のG検定試験問題とは異なります。本コンテンツはAIにより自動生成されており、内容の正確性を保証するものではありません。<br>
+                必ず公式教材と併用してください。本問題の使用により生じたいかなる損害についても責任を負いません。
+            </div>
+            
+            <!-- 問題ブロック（動的に生成） -->
+            
+<div class="question-block difficulty-medium">
+  <div class="question-number">問題 1</div>
+  <div class="question-text">市役所E課は生成AIで住民問い合わせの一次振分けを実証導入。1日1万件、応答時間30%短縮が目標。個人情報の誤取扱いと誤回答への苦情増を避けたい。3か月・5名で実装可能な初期統治策として最も妥当なのはどれか。</div>
+  <div class="choices">
+    <div class="choice" data-answer="A">職員に包括同意を取って全ログを無期限保存し、改善のため内部共有を許可する。</div>
+    <div class="choice" data-answer="B">ガードレール強化だけに集中し、説明や救済は正式運用後に整備する。</div>
+    <div class="choice" data-answer="C">クラウドに生データを常時送信し、モデル改善を最優先。自治体掲示で包括周知のみ行う。</div>
+    <div class="choice" data-answer="D">境界ケースの人手再審査と根拠提示ログ、短期保存・目的限定、苦情窓口とDPIAを実施する。</div>
+  </div>
+  <details>
+    <summary>解答を表示</summary>
+    <div class="answer-section">
+      <div class="correct-answer">正解：D</div>
+      <div class="explanation">
+        <div class="explanation-title">正解解説</div>
+        <p>Dは短期でも実装しやすい総合策で、説明責任と救済を同時に担保できる。閾値近傍を人手再審査に回すことで誤案内の是正と監視が可能。根拠提示ログは個別回答の説明可能性と監査を支え、保存期間の短期化と目的限定は最小化原則に合致。苦情窓口の明示とDPIAの実施により、高リスク箇所の特定・対策・残留リスクの記録を体系化できる。</p>
+        <hr class="explanation-divider" />
+        <div class="explanation-title">誤答解説</div>
+        <p><strong>選択肢A:</strong> 無期限保存と包括同意は過剰収集・目的外利用の温床。最小化や保存制限に反し、自治体の信頼も損なう。</p><p><strong>選択肢B:</strong> 説明・救済を後回しにすると苦情時の是正手段が欠落。短期導入でも最低限の救済・説明は必須。</p><p><strong>選択肢C:</strong> 常時生データ送信は漏えい面のリスクが高く、目的限定・データ最小化に反する。掲示のみでは説明責任が不十分。</p>
+      </div>
+    </div>
+  </details>
+</div>
+
+<div class="question-block difficulty-medium">
+  <div class="question-number">問題 2</div>
+  <div class="question-text">金融ベンチャーF社はクレカ不正検知の二次審査にLLM要約を追加。日次8,000件、誤検知対応の工数を20%削減したい。GPUはT4×1、遅延120ms以内。顧客への説明と異議申立て経路を確保しつつ短期導入する方針。最も妥当な初期統治策はどれか。</div>
+  <div class="choices">
+    <div class="choice" data-answer="A">高いしきい値で自動否認を増やし、苦情はFAQで一律対応。監視は四半期レビューのみとする。</div>
+    <div class="choice" data-answer="B">モデルカード公開、しきい値近傍の人手再審査、根拠提示ログと異議申立て導線の整備、DPIAを短期で実施する。</div>
+    <div class="choice" data-answer="C">説明義務を回避するため判断理由は保存せず、速度最優先でログを削る。</div>
+    <div class="choice" data-answer="D">全案件を外部監査法人の事前承認制にし、統治を厳格化してから運用を開始する。</div>
+  </div>
+  <details>
+    <summary>解答を表示</summary>
+    <div class="answer-section">
+      <div class="correct-answer">正解：B</div>
+      <div class="explanation">
+        <div class="explanation-title">正解解説</div>
+        <p>Bは短期導入に適したバランス案。モデルカードで用途・制約・評価指標を明示し透明性を確保、境界帯の人手再審査で誤否認を是正できる。根拠提示ログと異議申立て導線は説明責任と救済を両立させ、監査にも資する。DPIAは高リスク点の洗出し・対策・残留リスクの記録に有効で、T4×1・120msという運用制約下でも導入可能な現実解となる。</p>
+        <hr class="explanation-divider" />
+        <div class="explanation-title">誤答解説</div>
+        <p><strong>選択肢A:</strong> 自動否認増は苦情と差別的影響のリスクを高める。FAQ一律対応は救済として不十分で、実効性を欠く。</p><p><strong>選択肢C:</strong> 理由非保存は監査・説明を不可能にする。速度と統治は両立可能であり、ログ削減は本末転倒。</p><p><strong>選択肢D:</strong> 全件の外部事前承認はコストと遅延が過大。日次8,000件の運用では現実的でなく、初期対策として過剰統治。</p>
+      </div>
+    </div>
+  </details>
+</div>
+
+            
+            <footer class="footer">
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: #6c757d;">
+                        <strong>作成者: fuhito.f</strong> | ライセンス: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" style="color: #007bff; text-decoration: underline;">CC-BY 4.0</a>
+                    </p>
+                    <p style="margin: 0 0 8px 0; font-size: 0.85rem; color: #6c757d;">
+                        <strong>共有時はクレジット</strong>: "G検定問題生成AI by fuhito.f" を明記
+                    </p>
+                    
+                </div>
+                
+                <div style="background: #fff3cd; padding: 15px; border-radius: 6px; border-left: 4px solid #ffc107; margin: 15px 0;">
+                    <p style="margin: 0 0 8px 0; font-size: 0.85rem; color: #856404;">
+                        本問題は完全オリジナルのAI生成コンテンツです（個人作成）
+                    </p>
+                    <p style="margin: 0; font-size: 0.85rem; color: #856404;">
+                        G検定シラバス2024 v1.3 (G2024#6) の学習分野を参考にしていますが、<br>
+                        問題文・解説はすべて独自に作成したものです。<br>
+                        <strong>日本ディープラーニング協会（JDLA）の公式教材ではありません。</strong>
+                    </p>
+                </div>
+                
+                <div style="background: #ffeaa7; padding: 15px; border-radius: 6px; border-left: 4px solid #f39c12; margin: 15px 0;">
+                    <p style="margin: 0; font-size: 0.9rem; color: #8b6914;">
+                        <strong>推奨</strong>: 公式テキスト・公式問題集と併用してください
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </main>
+    
+    <!-- 印刷ボタン -->
+    <button class="print-button" onclick="window.print()" aria-label="このページを印刷">🖨️ 印刷</button>
+    
+    <!-- JavaScript不要: HTMLのdetailsタグで実装 -->
+</body>
+</html>
